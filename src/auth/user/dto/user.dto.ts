@@ -37,7 +37,7 @@ export class RegisterDto {
 
   @ApiProperty()
   @IsString()
-  password: string
+  password: string // NOTE: Try using strong regex to verify the password strength
 
 }
 

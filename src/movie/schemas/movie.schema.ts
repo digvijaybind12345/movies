@@ -4,6 +4,7 @@ import { Document } from 'mongoose';
 
 export type MovieDocument = Movie & Document;
 
+// NOTE: Follow naming convention
 @Schema()
 export class Movie {
   @Prop({ required: true })

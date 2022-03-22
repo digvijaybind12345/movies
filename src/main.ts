@@ -28,7 +28,7 @@ async function bootstrap() {
   SwaggerModule.setup('documentation', app, document);
 
 
-  app.use(cors());
+  app.use(cors()); // NOTE: Use either the cors() package or app.enabeCors()
   app.enableCors({
     origin: '*',
     methods: 'GET, PUT, POST, DELETE, PATCH',

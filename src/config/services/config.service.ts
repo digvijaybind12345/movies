@@ -1,6 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 
+// NOTE: Don't copy and paste
 export class ConfigService {
   constructor() {
     const nodeEnv = this.nodeEnv;

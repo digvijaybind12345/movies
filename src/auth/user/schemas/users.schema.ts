@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { v4 as uuid } from 'uuid'
 
+// NOTE: Follow one standard, either use the @Schema or 
 export const Users = new mongoose.Schema({
 
   id: {

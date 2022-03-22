@@ -20,15 +20,17 @@ import { CreateMovieDTO } from './dto/movie.dto';
 
 @Controller('movie')
 export class MovieController {
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService) {} // NOTE: Make the injections readonly
 
   //add movie
 
   @Post('/create')
   async createMovie(@Res() res, @Body() createMovieDTO: CreateMovieDTO) {
+    // NOTE: Don't use the try catch inside controller as it is only for transferring data
     try {
       const movie = await this.movieService.createMovie(createMovieDTO);
 
+      // NOTE: Use decorator for status, if not Post uses it's 201 status
       return res.status(HttpStatus.OK).json({
         message: 'Movie successfully added',
         movie,
@@ -40,7 +42,7 @@ export class MovieController {
 
   // Get Movies
 
-  @Get('/accessMovie')
+  @Get('/accessMovie') // NOTE: Follow naming convention
   async getMovies(@Res() res) {
     const movies = await this.movieService.getMovies();
     return res.status(HttpStatus.OK).json(movies);
@@ -51,29 +53,33 @@ export class MovieController {
   @Get('/:id')
   async getMovie(@Res() res, @Param('id') MovieID) {
     const movie = await this.movieService.getMovie(MovieID);
+    // NOTE: Use the exception in service
     if (!movie) throw new NotFoundException('Movie does not exist!');
   }
 
   // Delete movie
 
   @Delete('/delete')
-  @SetMetadata('roles', ['admin'])
+  @SetMetadata('roles', ['admin']) // NOTE: Use Roles Guard
   async deleteMovie(@Res() res, @Query('MovieID') MovieId) {
     const movieDeleted = await this.movieService.deleteMovie(MovieId);
     if (!movieDeleted) throw new NotFoundException('Movie does not exist !');
+    // NOTE: Decorators
     return res.status(HttpStatus.OK).json({
       message: 'Movie deleted Succesfully',
       movieDeleted,
     });
   }
-
+  
   // update movie:/
-
+  
+  // NOTE: no nees to use @Res everywhere, in nest you can return value and it will take the json format automatically
   @Put('/update')
   async updateMovie(
     @Res() res,
     @Body() createMovieDTO: CreateMovieDTO,
     @Query('MovieID') MovieID,
+    // NOTE: query field should be camelCase
   ) {
     const updateMovie = await this.movieService.updateMovie(
       MovieID,
@@ -94,6 +100,7 @@ export class MovieController {
     @Body() createMovieDTO: CreateMovieDTO,
     @Query('showId') showId,
   ) {
+    // NOTE: Follow naming convention
     return this.movieService.FilterMovie(showId);
   }
 }
