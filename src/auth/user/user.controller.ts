@@ -46,9 +46,9 @@ export class UserController {
     return await this.userService.signUp(userDto);
   }
 
-  @Get('getUserDetails')
+  @Get('getUserDetails') // NOTE: Make "getUserDetails" te function name and "me" in the endpoint
   @ApiBearerAuth()
-  @Auth()
+  @Auth() // NOTE: Use guards
   @ApiOperation({ summary: 'get profile data using token' })
   @ApiResponse({
     status: 200,

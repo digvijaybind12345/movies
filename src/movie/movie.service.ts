@@ -14,12 +14,12 @@ export class MovieService {
   ) {}
 
   async getMovies(): Promise<Movie[]> {
-    const movies: Movie[] = await this.movieModel.find().exec();
+    const movies: Movie[] = await this.movieModel.find().exec(); // NOTE: No need to call exec(), it gets called automatically
     return movies;
   }
 
   // get single movie
-  async getMovie(MovieID: number) {
+  async getMovie(MovieID: number) { // NOTE: varible name should be camelCase
     console.log('movie id', MovieID);
     const movie = await this.movieModel.findOne({ MovieID });
     console.log(movie);
@@ -28,13 +28,13 @@ export class MovieService {
 
   // post a single movie
   async createMovie(createMovieDTO: CreateMovieDTO): Promise<Movie> {
-    const NewMovie = new this.movieModel(createMovieDTO);
+    const NewMovie = new this.movieModel(createMovieDTO); // NOTE: Use create method
     return NewMovie.save();
   }
 
   // delete movie
 
-  async deleteMovie(MovieID: number): Promise<any> {
+  async deleteMovie(MovieID: number): Promise<any> { // NOTE: varible name should be camelCase
     const deleteMovie = await this.movieModel.findOneAndDelete({ MovieID });
     return deleteMovie;
   }
@@ -42,7 +42,7 @@ export class MovieService {
   // Put a single movie
 
   async updateMovie(
-    MovieID: number,
+    MovieID: number, // NOTE: varible name should be camelCase
     createMovieDTO: CreateMovieDTO,
   ): Promise<Movie> {
     const updateMovie = await this.movieModel.findByIdAndUpdate(
@@ -54,6 +54,7 @@ export class MovieService {
     return updateMovie;
   }
 
+  // NOTE: There are no filter operation happening, you are fetching only the movie by the id, try to implement the filteration methods
   async FilterMovie(MovieID: number): Promise<Movie[]> {
     const movies: Movie[] = await this.movieModel.findOne({ MovieID });
     return movies;

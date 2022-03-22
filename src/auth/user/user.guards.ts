@@ -35,6 +35,7 @@ export class AuthGuard implements CanActivate {
   }
 }
 
+// NOTE: Use classes for user-defined guards
 export function Auth() {
   return applyDecorators(UseGuards(AuthGuard));
 }

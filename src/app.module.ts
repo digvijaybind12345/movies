@@ -8,6 +8,7 @@ import { UserModule } from './auth/user/user.module';
 
 @Module({
   imports: [
+    // NOTE: Use other options for Mongoose
     MongooseModule.forRoot('mongodb://localhost/movie-nest', {
       useNewUrlParser: true,
     }),

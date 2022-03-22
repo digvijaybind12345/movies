@@ -37,7 +37,7 @@ export class UserService {
       //  if (phoneNo.match(/0{8,}/) != null) return { status: 400, message: 'PHONE NUMBER SHOULD NOT CONTAINS 8 Zeroes ' }
       const existPhoneNo = await this.usersRepository.findOne({ phoneNo });
       if (existPhoneNo)
-        return { status: 200, message: 'Phone no already exists' };
+        return { status: 200, message: 'Phone no already exists' }; // NOTE: It's a conflict that phone no exists, it shouldn't be 200, change the status to 409
     }
     if (/\d/.test(name))
       return { status: 400, message: 'NAME SHOULD NOT CONTAINS ANY NUMBER ' };
@@ -52,6 +52,7 @@ export class UserService {
     if (existEmail) return { status: 200, message: 'Email already registered' };
     //TODO if condition should be put after fetching
 
+    // NOTE: use create method
     const user = new this.usersRepository({
       id: newUuid,
       name,
@@ -63,12 +64,16 @@ export class UserService {
       password: pass,
     });
     const newUser = await user.save();
+
+    // NOTE: use just id as payload, not any other info
     const token = this.jwtService.sign({
       id: newUser.id,
       name,
       email: email.toLowerCase(),
       phoneNo,
     });
+
+    // NOTE: Use decorator
     return { status: HttpStatus.OK, token };
   }
 
